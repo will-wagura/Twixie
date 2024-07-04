@@ -1,0 +1,68 @@
+
+ .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(
+      to top,
+      #890e0e,
+      #870021,
+      #810031,
+      #77003e,
+      #6a054a,
+      #5d0c45,
+      #501040,
+      #44123a,
+      #371029,
+      #280e1c,
+      #1a0810,
+      #000000
+    );
+    overflow: hidden; /* Add this to prevent scrollbars */
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Add transition for the swipe effect and opacity */
+  }
+  
+  .swipe-left {
+    transform: translateX(-100%);
+    opacity: 0; /* Add fade-out effect */
+  }
+  
+  .loading-content {
+    text-align: center;
+  }
+  
+  .loading-image {
+    width: 150px;
+    height: 150px;
+    animation: fade 3s infinite;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  @keyframes fade {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  .loading-bar {
+    margin-top: 20px;
+    width: 80%;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .loading-bar-progress {
+    height: 100%;
+    background-color: #f2f5f2;
+    border-radius: 5px;
+    transition: width 0.1s;
+  }
