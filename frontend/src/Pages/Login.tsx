@@ -94,7 +94,7 @@ const Login: React.FC = () => {
         <img
           src={Logo}
           alt="logo"
-          style={{ maxWidth: "350px", height: "250px" }}
+          style={{ maxWidth: "450px", height: "350px" }}
         />
       </div>
       <div className="right-section1" data-aos="fade-up">

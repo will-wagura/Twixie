@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Loading.css";
-import winkLogo from "../assets/pic.png";
 import Logo from "../assets/tl.png";
 
 const Loading: React.FC = () => {
@@ -16,7 +15,7 @@ const Loading: React.FC = () => {
           clearInterval(interval);
           setSwipe(true); // Trigger swipe animation
           setTimeout(() => {
-            navigate('/login'); // Navigate after animation completes
+            navigate("/login"); // Navigate after animation completes
           }, 1000); // Duration should match CSS transition time
           return 100;
         }
@@ -28,17 +27,18 @@ const Loading: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className={`loading-container ${swipe ? 'swipe-left' : ''}`}>
+    <div className={`loading-container ${swipe ? "swipe-left" : ""}`}>
       <div className="loading-content">
-        <img src={winkLogo} alt="Loading" className="loading-image" />
         <img
-            src={Logo}
-            alt="logo"
-            style={{ maxWidth: "350px", height: "250px" }}
-          />
+          src={Logo}
+          alt="logo"
+          style={{ maxWidth: "350px", height: "250px" }}
+        />
 
-        <div className="loading-bar">
-          <div className="loading-bar-progress" style={{ width: `${loadingProgress}%` }}></div>
+        <div className="loading-dots">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
         </div>
       </div>
     </div>
