@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Loading from './Pages/Loading';
-import Login from './Pages/Login';
+import Login from './Components/Login';
 
 const Explore: React.FC = () => <div>Explore Page</div>;
 const Profile: React.FC = () => <div>Profile Page</div>;
