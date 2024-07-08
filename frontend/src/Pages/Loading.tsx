@@ -5,7 +5,7 @@ import Logo from "../assets/tl.png";
 
 const Loading: React.FC = () => {
   const navigate = useNavigate();
-  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [, setLoadingProgress] = useState(0);
   const [swipe, setSwipe] = useState(false); // State to trigger swipe animation
 
   useEffect(() => {

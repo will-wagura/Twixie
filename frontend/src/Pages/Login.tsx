@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import "../Styles/Login.css";
 import Logo from "../assets/tl.png"; 
 import AOS from 'aos';
@@ -24,51 +24,11 @@ const Login: React.FC = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [loginData, setLoginData] = useState<LoginData>({ username: '', password: '' });
   const [signupData, setSignupData] = useState<SignupData>({ username: '', email: '', password: '', confirmPassword: '' });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init({ duration: 1500 });
   }, []);
-
-//   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     try {
-//         const response = await axios.post('http://localhost:5000/auth/login', loginData);
-//         if (response.data.user) {
-//             localStorage.setItem('token', response.data.token);
-//             navigate('/home');
-//         }
-//     } catch (error: any) {
-//         console.error('Login failed:', error.response?.data?.message || error.message);
-//         console.error('Full error details:', error.response);
-//         // Handle error (e.g., show error message to user)
-//     }
-// };
-
-  
-//   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (signupData.password !== signupData.confirmPassword) {
-//       console.error('Passwords do not match');
-//       return;
-//     }
-//     try {
-//       const response = await axios.post('http://localhost:5000/auth/register', signupData);
-//       if (response.data.token) {
-//         localStorage.setItem('token', response.data.token);
-//         navigate('/home');
-//       }
-//     } catch (error: any) {
-//       if (error.response) {
-//         console.error('Signup failed:', error.response.data.message);
-//         // Display this error message to the user
-//       } else if (error.request) {
-//         console.error('No response received:', error.request);
-//       } else {
-//         console.error('Error setting up request:', error.message);
-//       }
-//     }
-//   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setData: React.Dispatch<React.SetStateAction<LoginData | SignupData>>) => {
     setData(prevData => ({
@@ -100,7 +60,7 @@ const Login: React.FC = () => {
       <div className="right-section1" data-aos="fade-up">
         <div className="form-container">
           <h2>Log In</h2>
-          {/* onSubmit={handleLogin} remember kuad kwa form ukianza backend */}
+          {/* onSubmit={handleLogin} remember kuadd kwa form ukianza backend */}
           <form >
             <div className="input-container">
               <label htmlFor="username">Username or Email</label>
