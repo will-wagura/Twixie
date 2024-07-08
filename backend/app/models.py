@@ -13,6 +13,10 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    profile_picture = db.Column(db.String(256), nullable=True)
+    bio = db.Column(db.String(500), nullable=True)
+    location = db.Column(db.String(100), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     tweets = db.relationship('Tweet', backref='user', lazy=True)
     followed = db.relationship(
         'User', secondary=followers,
@@ -44,11 +48,23 @@ class User(db.Model):
                 followers.c.follower_id == self.id).order_by(
                     Tweet.timestamp.desc())
 
+    def follower_count(self):
+        return self.followers.count()
+
+    def following_count(self):
+        return self.followed.count()
+
     def to_dict(self):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'profile_picture': self.profile_picture,
+            'bio': self.bio,
+            'location': self.location,
+            'created_at': self.created_at.isoformat(),
+            'followers_count': self.follower_count(),
+            'following_count': self.following_count()
         }
 
 class Tweet(db.Model):
@@ -58,6 +74,7 @@ class Tweet(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     likes = db.relationship('Like', backref='tweet', lazy=True)
     retweets = db.relationship('Retweet', backref='tweet', lazy=True)
+    replies = db.relationship('Reply', backref='tweet', lazy=True)
 
     def to_dict(self):
         return {
@@ -78,3 +95,19 @@ class Retweet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tweet_id = db.Column(db.Integer, db.ForeignKey('tweet.id'), nullable=False)
+
+class Reply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tweet_id = db.Column(db.Integer, db.ForeignKey('tweet.id'), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'content': self.content,
+            'timestamp': self.timestamp.isoformat(),
+            'user_id': self.user_id,
+            'tweet_id': self.tweet_id,
+        }

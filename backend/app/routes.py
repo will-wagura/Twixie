@@ -1,7 +1,8 @@
 from flask import request, jsonify, Blueprint
 from app import db
-from app.models import User, Tweet, Like, Retweet
+from app.models import User, Tweet, Like, Retweet, Reply
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from datetime import datetime
 
 routes = Blueprint('routes', __name__)
 
@@ -51,18 +52,23 @@ def create_tweet():
     db.session.commit()
     return jsonify(tweet.to_dict()), 201
 
-@routes.route('/api/tweets/<int:id>', methods=['PUT'])
+@routes.route('/api/tweet/<int:tweet_id>', methods=['PUT'])
 @jwt_required()
-def update_tweet(id):
-    user_id = get_jwt_identity()
-    data = request.get_json()
-    tweet = Tweet.query.get(id)
-
-    if tweet and tweet.user_id == user_id:
-        tweet.content = data.get('content', tweet.content)
-        db.session.commit()
-        return jsonify(tweet.to_dict()), 200
-    return jsonify(message='Unauthorized or tweet not found'), 403
+def update_tweet(tweet_id):
+    tweet = Tweet.query.get_or_404(tweet_id)
+    current_user_id = get_jwt_identity()
+    
+    if tweet.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized access"}), 403
+    
+    if (datetime.utcnow() - tweet.timestamp).total_seconds() > 600:
+        return jsonify({"error": "Cannot edit tweet after 10 minutes"}), 403
+    
+    data = request.json
+    tweet.content = data['content']
+    db.session.commit()
+    
+    return jsonify(tweet.to_dict()), 200
 
 @routes.route('/api/tweets/<int:id>', methods=['DELETE'])
 @jwt_required()
@@ -74,6 +80,43 @@ def delete_tweet(id):
         db.session.commit()
         return jsonify(message='Tweet deleted'), 200
     return jsonify(message='Unauthorized'), 403
+
+@routes.route('/api/tweet/<int:tweet_id>/reply', methods=['POST'])
+@jwt_required()
+def reply_to_tweet(tweet_id):
+    current_user_id = get_jwt_identity()
+    data = request.json
+    content = data.get('content')
+    
+    if not content:
+        return jsonify({"error": "Content is required"}), 400
+    
+    tweet = Tweet.query.get_or_404(tweet_id)
+    
+    reply = Reply(content=content, user_id=current_user_id, tweet_id=tweet_id)
+    db.session.add(reply)
+    db.session.commit()
+    
+    return jsonify(reply.to_dict()), 201
+
+
+@routes.route('/api/reply/<int:reply_id>', methods=['PUT'])
+@jwt_required()
+def update_reply(reply_id):
+    reply = Reply.query.get_or_404(reply_id)
+    current_user_id = get_jwt_identity()
+    
+    if reply.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized access"}), 403
+    
+    if (datetime.utcnow() - reply.timestamp).total_seconds() > 600:
+        return jsonify({"error": "Cannot edit reply after 10 minutes"}), 403
+    
+    data = request.json
+    reply.content = data['content']
+    db.session.commit()
+    
+    return jsonify(reply.to_dict()), 200
 
 @routes.route('/api/follow/<int:user_id>', methods=['POST'])
 @jwt_required()
@@ -145,6 +188,8 @@ def unretweet_tweet(tweet_id):
     db.session.commit()
     return jsonify({"message": "Retweet removed"}), 200
 
+# Profile endpoints for getting the tweets of the people that the user follows as well as update the profile bio password profile picture and username as well as posts liked, replies made to other tweets and user tweets
+
 @routes.route('/api/followed_tweets', methods=['GET'])
 @jwt_required()
 def get_followed_tweets():
@@ -152,3 +197,52 @@ def get_followed_tweets():
     current_user = User.query.get(current_user_id)
     tweets = current_user.followed_tweets()
     return jsonify([tweet.to_dict() for tweet in tweets]), 200
+
+@routes.route('/api/profile/<int:user_id>/tweets', methods=['GET'])
+@jwt_required()
+def get_user_tweets(user_id):
+    tweets = Tweet.query.filter_by(user_id=user_id).order_by(Tweet.timestamp.desc()).all()
+    return jsonify([tweet.to_dict() for tweet in tweets]), 200
+
+@routes.route('/api/profile/<int:user_id>/replies', methods=['GET'])
+@jwt_required()
+def get_user_replies(user_id):
+    replies = Reply.query.filter_by(user_id=user_id).order_by(Reply.timestamp.desc()).all()
+    return jsonify([reply.to_dict() for reply in replies]), 200
+
+@routes.route('/api/profile/<int:user_id>/likes', methods=['GET'])
+@jwt_required()
+def get_user_likes(user_id):
+    likes = Like.query.filter_by(user_id=user_id).all()
+    liked_tweets = [Tweet.query.get(like.tweet_id).to_dict() for like in likes]
+    return jsonify(liked_tweets), 200
+
+@routes.route('/api/profile/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    user_data = user.to_dict()
+    return jsonify(user_data), 200
+
+@routes.route('/api/profile/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_profile(user_id):
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({"error": "Unauthorized access"}), 403
+    
+    data = request.json
+    user = User.query.get_or_404(user_id)
+    
+    if 'username' in data:
+        user.username = data['username']
+    if 'bio' in data:
+        user.bio = data['bio']
+    if 'profile_picture' in data:
+        user.profile_picture = data['profile_picture']
+    if 'password' in data:
+        user.set_password(data['password'])
+    
+    db.session.commit()
+    
+    return jsonify(user.to_dict()), 200
