@@ -2,8 +2,8 @@
 body {
   margin: 0;
   padding: 2rem;
-  height: 100vh; /* Ensure body fills the viewport height */
-  font-family: 'Poppins', sans-serif; /* Apply Google Font */
+  height: 100vh; 
+  font-family: 'Poppins', sans-serif; 
   background-color: black;
 }
 
