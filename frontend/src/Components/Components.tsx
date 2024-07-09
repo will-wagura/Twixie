@@ -12,7 +12,7 @@ export const Container = styled.div`
   overflow: hidden;
   width: 900px;
   max-width: 100%;
-  min-height: 600px;
+  min-height: 550px;
 `;
 
 export const SignUpContainer = styled.div<Props>`
