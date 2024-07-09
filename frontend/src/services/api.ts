@@ -29,5 +29,3 @@ export const createTweet = async (content: string, token: string) => {
   });
   return response.data;
 };
-
-
