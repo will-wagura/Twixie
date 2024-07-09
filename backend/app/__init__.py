@@ -17,6 +17,9 @@ def create_app():
     jwt.init_app(app)
     CORS(app)
 
+    CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:5000"]}})
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000", "supports_credentials": True}})
+
     with app.app_context():
         from app.routes import routes
         app.register_blueprint(routes)
