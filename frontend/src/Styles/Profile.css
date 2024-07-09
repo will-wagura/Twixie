@@ -1,0 +1,21 @@
+.profile-container {
+    text-align: center;
+  }
+  
+  .profile-container h2 {
+    font-size: 24px;
+  }
+  
+  .profile-container .bio {
+    margin-top: 10px;
+    font-style: italic;
+  }
+  
+  .profile-container .stats {
+    margin-top: 15px;
+  }
+  
+  .profile-container .stats p {
+    margin: 5px 0;
+  }
+  
