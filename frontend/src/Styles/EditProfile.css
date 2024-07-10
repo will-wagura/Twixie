@@ -3,6 +3,7 @@
     flex-direction: column;
     width: 300px;
     margin: auto;
+    color: white;
   }
   
   .edit-profile-form div {

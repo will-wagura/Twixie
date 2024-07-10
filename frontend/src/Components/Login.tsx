@@ -124,4 +124,10 @@ function App() {
   );
 }
 
+<<<<<<< HEAD
 export default App;
+
+
+=======
+export default App;
+>>>>>>> 0abc37838de801a4bf885a23e59631346a2cbf86
