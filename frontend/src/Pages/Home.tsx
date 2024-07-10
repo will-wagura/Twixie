@@ -69,7 +69,7 @@ const Home: React.FC = () => {
         </Link>
     <input
       type="text"
-      placeholder="What is happening?"
+      placeholder="What is happening?!"
       className="post-input"
     />
     <button className="post-button">Post</button>
