@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaRegEnvelope } from 'react-icons/fa';
+import { FaHome, FaRegEnvelope, FaSearch } from 'react-icons/fa';
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { IoIosSearch } from "react-icons/io";
+
 
 import '../Styles/Home.css';
 import logo from '../assets/tl.png'; 
@@ -60,9 +61,21 @@ const Home: React.FC = () => {
         </nav>
         <div className="content">
         <div className="content-section">
-          <h2>Section 1</h2>
-          {/* Content for section 1 */}
-        </div>
+
+  <div className="profile-post">
+  <Link to="/profile" >
+          <CgProfile className="profile-icon" />
+          
+        </Link>
+    <input
+      type="text"
+      placeholder="What is happening?"
+      className="post-input"
+    />
+    <button className="post-button">Post</button>
+  </div>
+  {/* Content for section 1 */}
+</div>
         <div className="content-section">
           <h2>Section 2</h2>
           {/* Content for section 2 */}
@@ -70,10 +83,18 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className="main-content2">
-  <div className="sticky-search">
-    <input type="text" placeholder="Search..." className="search-input" />
-    <button className="search-button">Search</button>
+      <div className="sticky-search">
+  <div className="search-container">
+    <input 
+      type="text" 
+      className="search-input" 
+      placeholder="Search" 
+    />
+    <button className="search-button">
+      <FaSearch className="search-icon" />
+    </button>
   </div>
+</div>
   <div className="content2">
     <div className="content-section2">
       <h2>Section 3</h2>
