@@ -5,7 +5,6 @@ import Login from './Components/Login';
 // import Explore from './Components/Explore'; 
 // import Profile from './Components/Profile'; 
 // import Tweets from './Components/Tweets';
-//import Footer from './Components/Footer';
 import Home from './Pages/Home'; 
 
 const App: React.FC = () => {
@@ -19,7 +18,6 @@ const App: React.FC = () => {
         <Route path="/profile" element={<Profile />} /> */}
         {/* <Route path="/tweets" element={<Tweets />} /> */}
       </Routes>
-      {/* <Footer /> */}
     </Router>
   );
 };
