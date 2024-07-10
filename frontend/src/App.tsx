@@ -5,7 +5,8 @@ import Login from './Components/Login';
 // import Explore from './Components/Explore'; 
 // import Profile from './Components/Profile'; 
 // import Tweets from './Components/Tweets';
-import Footer from './Components/Footer';
+//import Footer from './Components/Footer';
+import Home from './Pages/Home'; 
 
 const App: React.FC = () => {
   return (
@@ -13,11 +14,12 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Loading />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         {/* <Route path="/explore" element={<Explore />} />
         <Route path="/profile" element={<Profile />} /> */}
         {/* <Route path="/tweets" element={<Tweets />} /> */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 };
