@@ -37,12 +37,14 @@ body {
 }
 
 .footer-container {
+  position: fixed;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
-  max-width: 100vw;
+  background-color: black; 
   overflow: hidden;
+  width: 85%;
 }
 
 .footer-links {
@@ -52,7 +54,6 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%;
 }
 
 .footer-link {

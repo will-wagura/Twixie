@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as Components from './Components';
 import logo from '../assets/tl.png';
 import { loginUser, registerUser } from '../services/api';
+import Footer from "./Footer";
 
 function App() {
   const [signIn, toggle] = useState(true);
@@ -118,6 +119,7 @@ function App() {
           </Components.Overlay>
         </Components.OverlayContainer>
       </Components.Container>
+      <Footer />
     </div>
   );
 }
