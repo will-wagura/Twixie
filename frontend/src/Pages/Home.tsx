@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import { FaHome, FaRegEnvelope, FaSearch } from 'react-icons/fa';
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { IoIosSearch } from "react-icons/io";
-
-
 import '../Styles/Home.css';
 import logo from '../assets/tl.png'; 
 
 const Home: React.FC = () => {
-  const navigate = useNavigate();
+  
   const [activeTab, setActiveTab] = useState('for-you');
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
+  // const refreshPage = () => {
+  //   window.location.reload();
+  // };
 
   return (
     <div className="home-container">
@@ -23,10 +21,14 @@ const Home: React.FC = () => {
         <div className="logo-container">
           <img src={logo} alt="Logo" className="logo" />
         </div>
-        <div className="sidebar-item" onClick={refreshPage}>
+        {/* <div className="sidebar-item" onClick={refreshPage}>
           <FaHome className="sidebar-icon" />
           <span className="sidebar-label">Home</span>
-        </div>
+        </div> */}
+        <Link to="/home" className="sidebar-item">
+          <FaHome className="sidebar-icon" />
+          <span className="sidebar-label">Home</span>
+        </Link>
         <Link to="/explore" className="sidebar-item">
           <IoIosSearch className="sidebar-icon" />
           <span className="sidebar-label">Explore</span>
@@ -60,7 +62,7 @@ const Home: React.FC = () => {
           </div>
         </nav>
         <div className="content">
-        <div className="content-section">
+        <div className="content-section1">
 
   <div className="profile-post">
   <Link to="/profile" >

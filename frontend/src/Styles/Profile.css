@@ -1,21 +1,107 @@
+/* Profile.css */
+
 .profile-container {
-    text-align: center;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.main-profile {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.sticky-profile {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e8ed;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.nav-profile {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.back-arrow {
+  margin-right: 10px;
+}
+
+.content {
+  padding: 20px;
+}
+
+.content-section {
+  margin-bottom: 20px;
+}
+
+.profile-header {
+  background-color: #f5f8fa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
+.profile-header p {
+  margin: 5px 0;
+  color: #657786;
+}
+
+.profile-header button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-header button:hover {
+  background-color: #1991db;
+}
+
+.profile-tweets {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon {
+  font-size: 24px;
+  color: #1da1f2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
   }
-  
-  .profile-container h2 {
-    font-size: 24px;
+
+  .main-profile {
+    width: 100%;
   }
-  
-  .profile-container .bio {
-    margin-top: 10px;
-    font-style: italic;
+
+  .sticky-profile {
+    position: fixed;
+    width: 100%;
   }
-  
-  .profile-container .stats {
-    margin-top: 15px;
+
+  .content {
+    margin-top: 60px;
   }
-  
-  .profile-container .stats p {
-    margin: 5px 0;
-  }
-  
+}
