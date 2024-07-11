@@ -19,63 +19,26 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 
 ## Installation
 
-### Backend Setup
 1. Clone the repository:
     ```bash
     git clone git@github.com:will-wagura/Twixie.git
     cd Twixie
     ```
+2. Navigate to the Frontend Directory:
+  ```bash
+cd frontend
+```
+3. Install Dependencies:
+Use npm to install all the required dependencies listed in your package.json.
 
-2. Create and activate a virtual environment:
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3. Install the required Python packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Set up the database:
-    ```bash
-    flask db init
-    flask db migrate
-    flask db upgrade
-    ```
-
-### Frontend Setup
-1. Navigate to the `client` directory:
-    ```bash
-    cd client
-    ```
-
-2. Install the required npm packages:
-    ```bash
-    npm install
-    ```
-
+```bash
+npm install
+```
 ## Running the Application
-
-### Running the Backend
-1. Make sure you are in the root directory of the project.
-2. Start the Flask server:
-    ```bash
-    flask run
-    ```
-
-### Running the Frontend
-1. Navigate to the `client` directory:
-    ```bash
-    cd client
-    ```
-
-2. Start the React development server:
-    ```bash
-    npm start
-    ```
-
-3. Open your browser and go to `http://localhost:3000` to view the application.
+Once dependencies are installed, you can run your React application:
+```bash
+npm start
+```
 
 ## Models and Relationships
 The application includes the following models:
