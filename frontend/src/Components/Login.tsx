@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as Components from './Components';
 import logo from '../assets/tl.png';
 import { loginUser, registerUser } from '../services/api';
@@ -25,10 +27,10 @@ function App() {
       const response = await loginUser(loginData.email, loginData.password);
       const token = response.token;
       localStorage.setItem('token', token);
-      console.log('Login successful:', response);
+      toast.success('Login successful!');
       navigate('/home'); // Navigate to home page after successful login
     } catch (error) {
-      console.error('Login error:', error);
+      toast.error('Login error: ' + error.message);
     }
   };
 
@@ -38,41 +40,42 @@ function App() {
       const response = await registerUser(signupData.name, signupData.email, signupData.password);
       const token = response.token;
       localStorage.setItem('token', token);
-      console.log('Signup successful:', response);
-      toggle(true); 
-      setSignupData({ name: '', email: '', password: '' }); 
+      toast.success('Signup successful!');
+      toggle(true);
+      setSignupData({ name: '', email: '', password: '' });
     } catch (error) {
-      console.error('Signup error:', error);
+      toast.error('Signup error: ' + error.message);
     }
   };
 
   return (
     <div className="login-container">
-      <img src={logo} alt="logo" style={{ width: "450px", height: "350px", marginRight: "250px"}} />
+      <ToastContainer />
+      <img src={logo} alt="logo" style={{ width: "450px", height: "350px", marginRight: "250px" }} />
       <Components.Container>
         <Components.SignUpContainer signinIn={signIn}>
           <Components.Form onSubmit={handleSignup}>
             <Components.Title>Create Account</Components.Title>
-            <Components.Input 
-              type='text' 
+            <Components.Input
+              type='text'
               name="name"
-              placeholder='Name' 
+              placeholder='Name'
               value={signupData.name}
-              onChange={handleSignupChange} 
+              onChange={handleSignupChange}
             />
-            <Components.Input 
-              type='email' 
+            <Components.Input
+              type='email'
               name="email"
-              placeholder='Email' 
+              placeholder='Email'
               value={signupData.email}
-              onChange={handleSignupChange} 
+              onChange={handleSignupChange}
             />
-            <Components.Input 
-              type='password' 
+            <Components.Input
+              type='password'
               name="password"
-              placeholder='Password' 
+              placeholder='Password'
               value={signupData.password}
-              onChange={handleSignupChange} 
+              onChange={handleSignupChange}
             />
             <Components.Button type="submit">Sign Up</Components.Button>
           </Components.Form>
@@ -81,19 +84,19 @@ function App() {
         <Components.SignInContainer signinIn={signIn}>
           <Components.Form onSubmit={handleLogin}>
             <Components.Title>Sign in</Components.Title>
-            <Components.Input 
-              type='email' 
+            <Components.Input
+              type='email'
               name="email"
-              placeholder='Email' 
+              placeholder='Email'
               value={loginData.email}
-              onChange={handleLoginChange} 
+              onChange={handleLoginChange}
             />
-            <Components.Input 
-              type='password' 
+            <Components.Input
+              type='password'
               name="password"
-              placeholder='Password' 
+              placeholder='Password'
               value={loginData.password}
-              onChange={handleLoginChange} 
+              onChange={handleLoginChange}
             />
             <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
             <Components.Button type="submit">Sign In</Components.Button>
