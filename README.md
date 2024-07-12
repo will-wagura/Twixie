@@ -22,7 +22,7 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 ### Backend Setup
 1. Clone the repository:
     ```bash
-    git clone 
+    git clone https://github.com/will-wagura/Twixie.git --depth 1
     cd Twixie
     ```
 
