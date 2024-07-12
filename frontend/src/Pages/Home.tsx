@@ -35,6 +35,10 @@ const Home: React.FC = () => {
     fetchTweets();
   }, []);
 
+  const handleTweetTextChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setTweetText(event.target.value);
+  }, []);
+
   const handlePostTweet = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
@@ -105,7 +109,7 @@ const Home: React.FC = () => {
                 placeholder="What is happening?!"
                 className="post-input"
                 value={tweetText}
-                onChange={(e) => setTweetText(e.target.value)}
+                onChange={handleTweetTextChange}
               />
               <button className="post-button" onClick={handlePostTweet}>
                 Post
@@ -142,26 +146,6 @@ const Home: React.FC = () => {
           <div className="content-section2">
             <h3>Trending</h3>
             <div className="trending-item">
-              <span className="trending-category">Politics · Trending</span>
-              <h3 className="trending-topic">#RutoMustGO</h3>
-              <span className="trending-tweets">500K Tweets</span>
-            </div><div className="trending-item">
-              <span className="trending-category">Politics · Trending</span>
-              <h3 className="trending-topic">#RutoMustGO</h3>
-              <span className="trending-tweets">500K Tweets</span>
-            </div><div className="trending-item">
-              <span className="trending-category">Politics · Trending</span>
-              <h3 className="trending-topic">#RutoMustGO</h3>
-              <span className="trending-tweets">500K Tweets</span>
-            </div><div className="trending-item">
-              <span className="trending-category">Politics · Trending</span>
-              <h3 className="trending-topic">#RutoMustGO</h3>
-              <span className="trending-tweets">500K Tweets</span>
-            </div><div className="trending-item">
-              <span className="trending-category">Politics · Trending</span>
-              <h3 className="trending-topic">#RutoMustGO</h3>
-              <span className="trending-tweets">500K Tweets</span>
-            </div><div className="trending-item">
               <span className="trending-category">Politics · Trending</span>
               <h3 className="trending-topic">#RutoMustGO</h3>
               <span className="trending-tweets">500K Tweets</span>

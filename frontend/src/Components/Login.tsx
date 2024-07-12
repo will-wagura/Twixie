@@ -25,7 +25,7 @@ function App() {
     e.preventDefault();
     try {
       const response = await loginUser(loginData.email, loginData.password);
-      const token = response.token;
+      const token = response.access_token;
       localStorage.setItem('token', token); 
       toast.success('Login successful!');
       navigate('/home'); 
