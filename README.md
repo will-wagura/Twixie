@@ -34,21 +34,20 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 2. Create and activate a virtual environment:
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pipenv install && pipenv shell
    ```
 
-3. Install the required Python packages:
+3. Import necessary variables:
 
-   ```bash
-   pip install -r requirements.txt
+   ```
+   cp .env.example .env
    ```
 
 4. Set up the database:
    ```bash
    flask db init
-   flask db migrate
-   flask db upgrade
+   flask db migrate -m 'Initial migration'
+   flask db upgrade head
    ```
 
 ### Frontend Setup
@@ -56,17 +55,21 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 1. Navigate to the `client` directory:
 
    ```bash
-   cd client
+   npm install --prefix frontend
    ```
 
-2. Install the required npm packages:
+<!-- 2. Install the required npm packages:
    ```bash
    npm install
-   ```
+   ``` -->
 
 ## Running the Application
 
-### Running the Backend
+```
+honcho start -f Procfile.dev
+```
+
+<!-- ### Running the Backend
 
 1. Make sure you are in the root directory of the project.
 2. Start the Flask server:
@@ -86,11 +89,15 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 
    ```bash
    npm start
-   ```
+   ``` -->
 
-3. Open your browser and go to `http://localhost:5173` to view the application.
 
-4. Optionally:
+- Open your browser and go to `http://localhost:5173` to view the application.
+
+# Endpoints:
+
+
+- Optionally:
 
 ```
 honcho start -f Procfile.dev
