@@ -26,9 +26,9 @@ function App() {
     try {
       const response = await loginUser(loginData.email, loginData.password);
       const token = response.access_token;
-      localStorage.setItem('token', token); 
+      localStorage.setItem('token', token);
       toast.success('Login successful!');
-      navigate('/home'); 
+      navigate('/home');
     } catch (error) {
       toast.error('Login error: ' + (error as Error).message);
     }
@@ -100,6 +100,7 @@ function App() {
             />
             <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
             <Components.Button type="submit">Sign In</Components.Button>
+            <Components.Anchor href='/home' >Home</Components.Anchor>
           </Components.Form>
         </Components.SignInContainer>
 
@@ -113,6 +114,7 @@ function App() {
               <Components.GhostButton onClick={() => toggle(true)}>
                 Sign In
               </Components.GhostButton>
+
             </Components.LeftOverlayPanel>
 
             <Components.RightOverlayPanel signinIn={signIn}>

@@ -1,18 +1,18 @@
 // Sidebar.tsx
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { FaHome, FaRegEnvelope} from 'react-icons/fa';
+import { FaHome, FaRegEnvelope } from 'react-icons/fa';
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { IoIosSearch } from "react-icons/io";
 
 import '../Styles/Profile.css';
-import logo from '../assets/tl.png'; 
+import logo from '../assets/tl.png';
 
 const Sidebar: React.FC = () => {
-//   const refreshPage = () => {
-//     window.location.reload();
-//   };
+  //   const refreshPage = () => {
+  //     window.location.reload();
+  //   };
 
   return (
     <div className="sidebar-container">
@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
           <FaHome className="sidebar-icon" />
           <span className="sidebar-label">Home</span>
         </div> */}
-         <Link to="/home" className="sidebar-item">
+        <Link to="/home" className="sidebar-item">
           <FaHome className="sidebar-icon" />
           <span className="sidebar-label">Home</span>
         </Link>

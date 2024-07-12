@@ -13,7 +13,7 @@ def create_fake_users(count=10):
         user = User(
             username=fake.user_name(),
             email=fake.email(),
-            profile_picture=fake.image_url(),
+            profile_picture="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwme89cM8YZvHcybGrZl_Obd9U9p5QabozJQ&s",
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
             created_at=fake.date_time_this_decade(),
@@ -25,7 +25,7 @@ def create_fake_users(count=10):
     return users
 
 
-def create_fake_tweets(users, count=30):
+def create_fake_tweets(users, count=5):
     tweets = []
     for _ in range(count):
         tweet = Tweet(
@@ -39,14 +39,14 @@ def create_fake_tweets(users, count=30):
     return tweets
 
 
-def create_fake_likes(users, tweets, count=50):
+def create_fake_likes(users, tweets, count=5):
     for _ in range(count):
         like = Like(user_id=random.choice(users).id, tweet_id=random.choice(tweets).id)
         db.session.add(like)
     db.session.commit()
 
 
-def create_fake_retweets(users, tweets, count=20):
+def create_fake_retweets(users, tweets, count=2):
     for _ in range(count):
         retweet = Retweet(
             user_id=random.choice(users).id, tweet_id=random.choice(tweets).id
@@ -55,7 +55,7 @@ def create_fake_retweets(users, tweets, count=20):
     db.session.commit()
 
 
-def create_fake_replies(users, tweets, count=40):
+def create_fake_replies(users, tweets, count=4):
     for _ in range(count):
         reply = Reply(
             content=fake.text(max_nb_chars=280),
@@ -80,10 +80,10 @@ def main():
     with app.app_context():
         db.create_all()
         users = create_fake_users(10)
-        tweets = create_fake_tweets(users, 30)
-        create_fake_likes(users, tweets, 50)
-        create_fake_retweets(users, tweets, 20)
-        create_fake_replies(users, tweets, 40)
+        tweets = create_fake_tweets(users, 5)
+        create_fake_likes(users, tweets, 5)
+        create_fake_retweets(users, tweets, 2)
+        create_fake_replies(users, tweets, 4)
         create_fake_followers(users, 20)
 
 

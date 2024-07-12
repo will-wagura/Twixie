@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:5000/api'; 
+const API_URL = 'http://127.0.0.1:5000/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -19,6 +19,30 @@ export const loginUser = async (email: string, password: string) => {
 export const getTweets = async () => {
   const response = await api.get('/tweets');
   return response.data;
+};
+export const deleteTweet = async (tweetId: number, token: string) => {
+  try {
+    const response = await fetch('/api/tweets', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ tweetId }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error('Server response:', result);
+      throw new Error(result.error || 'Failed to delete tweet');
+    }
+
+    return result;
+  } catch (error) {
+    console.error('Error deleting tweet:', error);
+    throw error;
+  }
 };
 
 export const createTweet = async (tweetText: string, token: string) => {
@@ -45,3 +69,4 @@ export const createTweet = async (tweetText: string, token: string) => {
     throw error;
   }
 };
+

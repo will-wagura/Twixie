@@ -1,10 +1,9 @@
 /* Reset default margin and padding for body */
 body {
-  margin: 0;
-  padding: 2rem;
-  height: 100vh; 
-  font-family: 'Poppins', sans-serif; 
-  background-color: black;
-  color: black;
+	margin: 0;
+	padding: 2rem;
+	height: 100vh;
+	font-family: 'Poppins', sans-serif;
+	background-color: black;
+	color: black;
 }
-

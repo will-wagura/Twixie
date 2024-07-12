@@ -1,8 +1,9 @@
 from flask import request, jsonify, Blueprint, make_response
+import pytz
 from app import db
 from app.models import User, Tweet, Like, Retweet, Reply
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from datetime import datetime
+from datetime import datetime, timedelta
 
 routes = Blueprint("routes", __name__)
 
@@ -38,7 +39,9 @@ def login():
 
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(
+            identity=user.id, expires_delta=timedelta(minutes=60)
+        )
         return jsonify({"access_token": access_token}), 200
 
     return jsonify({"message": "Invalid email or password"}), 401
@@ -55,8 +58,8 @@ def get_tweets():
 def create_tweet():
     user_id = get_jwt_identity()
     data = request.get_json()
-    
-    if not data or 'content' not in data:
+
+    if not data or "content" not in data:
         return jsonify({"error": "Invalid input"}), 422
 
     content = data.get("content")
@@ -64,14 +67,22 @@ def create_tweet():
     if not content or len(content.strip()) == 0:
         return jsonify({"error": "Content cannot be empty"}), 422
 
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    nairobi_tz = pytz.timezone("Africa/Nairobi")
+    nairobi_time = datetime.now(nairobi_tz)
+
     try:
-        tweet = Tweet(content=content, user_id=user_id)
+        tweet = Tweet(content=content, user_id=user.id, timestamp=nairobi_time)
         db.session.add(tweet)
         db.session.commit()
         return jsonify(tweet.to_dict()), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 @routes.route("/api/tweet/<int:tweet_id>", methods=["PUT"])
 @jwt_required()
@@ -100,8 +111,66 @@ def delete_tweet(id):
     if tweet and tweet.user_id == user_id:
         db.session.delete(tweet)
         db.session.commit()
-        return jsonify(message="Tweet deleted"), 200
-    return jsonify(message="Unauthorized"), 403
+        return jsonify({"message": "Tweet deleted"}), 200
+    return jsonify({"message": "Unauthorized"}), 403
+
+
+@routes.route("/api/users", methods=["GET"])
+def get_users():
+    users = User.query.all()
+    users_list = [user.to_dict() for user in users]
+    return make_response(jsonify(users_list), 200)
+
+
+@routes.route("/api/users/<int:id>", methods=["GET"])
+def get_users_by_id(id):
+    user = User.query.get(id)
+    if not user:
+        return make_response(jsonify({"error": "User not found"}), 404)
+
+    return make_response(jsonify(user.to_dict()), 200)
+
+
+@routes.route("/api/users/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_user(id):
+    current_user_id = get_jwt_identity()
+    if current_user_id != id:
+        return make_response(jsonify({"error": "Unauthorized"}), 403)
+
+    data = request.get_json()
+    user = User.query.get(id)
+
+    if not user:
+        return make_response(jsonify({"error": "User not found"}), 404)
+
+    if "username" in data:
+        new_username = data["username"]
+        if new_username != user.username:
+            existing_user = User.query.filter_by(username=new_username).first()
+            if existing_user:
+                return make_response(jsonify({"error": "Username already taken"}), 400)
+            user.username = new_username
+
+    if "email" in data:
+        new_email = data["email"]
+        if new_email != user.email:
+            existing_user = User.query.filter_by(email=new_email).first()
+            if existing_user:
+                return make_response(jsonify({"error": "Email already taken"}), 400)
+            user.email = new_email
+
+    user.profile_picture = data.get("profile_picture", user.profile_picture)
+    user.bio = data.get("bio", user.bio)
+    user.location = data.get("location", user.location)
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return make_response(jsonify({"error": str(e)}), 500)
+
+    return make_response(jsonify(user.to_dict()), 200)
 
 
 @routes.route("/api/tweet/<int:tweet_id>/reply", methods=["POST"])
@@ -218,9 +287,6 @@ def unretweet_tweet(tweet_id):
     db.session.delete(retweet)
     db.session.commit()
     return jsonify({"message": "Retweet removed"}), 200
-
-
-# Profile endpoints for getting the tweets of the people that the user follows as well as update the profile bio password profile picture and username as well as posts liked, replies made to other tweets and user tweets
 
 
 @routes.route("/api/followed_tweets", methods=["GET"])
