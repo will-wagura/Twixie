@@ -1,0 +1,41 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+alembic = "*"
+aniso8601 = "*"
+bcrypt = "*"
+blinker = "*"
+click = "*"
+Faker = "*"
+Flask = "*"
+Flask-Cors = "*"
+Flask-JWT-Extended = "*"
+Flask-Migrate = "*"
+Flask-RESTful = "*"
+Flask-SQLAlchemy = "*"
+greenlet = "*"
+importlib_metadata = "*"
+importlib_resources = "*"
+itsdangerous = "*"
+Jinja2 = "*"
+Mako = "*"
+MarkupSafe = "*"
+PyJWT = "*"
+python-dateutil = "*"
+python-dotenv = "*"
+pytz = "*"
+six = "*"
+SQLAlchemy = "*"
+typing_extensions = "*"
+tzdata = "*"
+Werkzeug = "*"
+zipp = "*"
+honcho = "*"
+
+[requires]
+python_version = "3.8"
