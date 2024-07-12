@@ -1,49 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaCalendarAlt } from "react-icons/fa";
 import '../Styles/Profile.css';
+import Sidebar from './Sidebar';
 
-interface ProfileData {
-  username: string;
-  bio: string;
-  followers_count: number;
-  following_count: number;
-}
+const Profile: React.FC = () => {
+  const navigate = useNavigate();
 
-const Profile: React.FC<{ userId: number }> = ({ userId }) => {
-  const [profile, setProfile] = useState<ProfileData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`http://127.0.0.1:5000/api/profile/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfile(response.data);
-      } catch (error) {
-        setError('Failed to load profile');
-      }
-    };
-    fetchProfile();
-  }, [userId]);
-
-  if (!profile) {
-    return <p>{error ? error : 'Loading...'}</p>;
-  }
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="profile-container">
-      <h2>{profile.username}</h2>
-      <p className="bio">{profile.bio}</p>
-      <div className="stats">
-        <p key="followers">Followers: {profile.followers_count}</p>
-        <p key="following">Following: {profile.following_count}</p>
+      <Sidebar />
+      <div className="main-profile">
+        <nav className="sticky-profile1">
+          <div className="nav-profile" onClick={handleBackClick}>
+            <FaArrowLeft className="back-arrow" />
+            Profile
+          </div>
+          <div className="nav-profile">
+            0 posts
+          </div>
+        </nav>
+        <div className="profile-header">
+          <div className="profile-avatar">
+            <span className="avatar-placeholder">S</span>
+          </div>
+          <button className="edit-profile-btn">Edit profile</button>
+          <h2>stephie kamau</h2>
+          <p className="username">@KamauSteph37259</p>
+          <p className="join-date"><FaCalendarAlt /> Joined September 2023</p>
+          <div className="follow-stats">
+            <span><strong>0</strong> Following</span>
+            <span><strong>0</strong> Followers</span>
+          </div>
+        </div>
+        <div className="profile-tabs">
+          <button className="tab active">Posts</button>
+          <button className="tab">Replies</button>
+          <button className="tab">Highlights</button>
+          <button className="tab">Media</button>
+          <button className="tab">Likes</button>
+        </div>
+        <div className="profile-content">
+          {/* You can add content for posts, replies, etc. here */}
+        </div>
+      </div>
+      <div className="sidebar-right">
+        <div className="who-to-follow">
+          <h3>Who to follow</h3>
+          {/* Add suggested users to follow here */}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Profile;
