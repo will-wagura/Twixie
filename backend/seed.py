@@ -1,7 +1,8 @@
 import random
 from faker import Faker
+from run import app
 from app import db
-from models import User, Tweet, Like, Retweet, Reply
+from app.models import User, Tweet, Like, Retweet, Reply
 
 fake = Faker()
 
@@ -76,14 +77,16 @@ def create_fake_followers(users, count=20):
 
 
 def main():
-    db.create_all()
-    users = create_fake_users(10)
-    tweets = create_fake_tweets(users, 30)
-    create_fake_likes(users, tweets, 50)
-    create_fake_retweets(users, tweets, 20)
-    create_fake_replies(users, tweets, 40)
-    create_fake_followers(users, 20)
+    with app.app_context():
+        db.create_all()
+        users = create_fake_users(10)
+        tweets = create_fake_tweets(users, 30)
+        create_fake_likes(users, tweets, 50)
+        create_fake_retweets(users, tweets, 20)
+        create_fake_replies(users, tweets, 40)
+        create_fake_followers(users, 20)
 
 
 if __name__ == "__main__":
+    print("Seeding db...")
     main()

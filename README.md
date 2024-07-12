@@ -50,6 +50,10 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
    flask db migrate -m 'Initial migration'
    flask db upgrade head
    ```
+5. Then seed the DB with sample data:
+   ```
+   python backend/seed.py
+   ```
 
 ### Frontend Setup
 
