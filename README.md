@@ -97,8 +97,14 @@ honcho start -f Procfile.dev
    ``` -->
 
 - Open your browser and go to `http://localhost:5173` to view the application.
+- Run `http://127.0.0.1:5000/api/test` to confirm backend is okay
 
 # Endpoints:
+
+```
+http://127.0.0.1:5000/api/tweets
+
+```
 
 - Optionally:
 

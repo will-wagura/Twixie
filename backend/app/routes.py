@@ -7,7 +7,7 @@ from datetime import datetime
 routes = Blueprint("routes", __name__)
 
 
-@routes.route("/test", methods=["GET"])
+@routes.route("/api/test", methods=["GET"])
 def test():
     return jsonify({"message": "Working backend"})
 
