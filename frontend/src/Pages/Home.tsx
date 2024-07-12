@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   // };
 
   return (
-    <div className="home-container">
+    <div className="ho-container">
       <div className="sidebar">
         <div className="logo-container">
           <img src={logo} alt="Logo" className="logo" />
@@ -109,3 +109,22 @@ const Home: React.FC = () => {
 }
 
 export default Home;
+
+// import React from 'react';
+// import Feed from '../Components/Feed';
+// import Sidebar from '../Components/Sidebar';
+// import TrendSidebar from '../Components/TrendsSideBar';
+
+// const Home: React.FC = () => {
+//   return (
+//     <div className="flex flex-row justify-evenly max-w-full">
+//       <Sidebar />
+//       <div className="flex-1 mx-4">
+//         <Feed />
+//       </div>
+//       <TrendSidebar />
+//     </div>
+//   );
+// };
+
+// export default Home;

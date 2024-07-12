@@ -60,6 +60,7 @@ export const Title = styled.h1`
 
 export const Input = styled.input`
   background-color: #fff;
+  color: #ccc
   font-family: Poppins;
   border: none;
   border-radius: 10px;

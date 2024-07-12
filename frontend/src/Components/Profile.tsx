@@ -44,9 +44,9 @@ const Profile: React.FC = () => {
           <button className="tab">Media</button>
           <button className="tab">Likes</button>
         </div>
-        <div className="profile-content">
+        {/* <div className="profile-content"> */}
           {/* You can add content for posts, replies, etc. here */}
-        </div>
+        {/* </div> */}
       </div>
       <div className="sidebar-right">
         <div className="who-to-follow">
