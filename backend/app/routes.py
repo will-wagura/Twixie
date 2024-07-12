@@ -55,12 +55,23 @@ def get_tweets():
 def create_tweet():
     user_id = get_jwt_identity()
     data = request.get_json()
-    content = data.get("content")
-    tweet = Tweet(content=content, user_id=user_id)
-    db.session.add(tweet)
-    db.session.commit()
-    return jsonify(tweet.to_dict()), 201
+    
+    if not data or 'content' not in data:
+        return jsonify({"error": "Invalid input"}), 422
 
+    content = data.get("content")
+
+    if not content or len(content.strip()) == 0:
+        return jsonify({"error": "Content cannot be empty"}), 422
+
+    try:
+        tweet = Tweet(content=content, user_id=user_id)
+        db.session.add(tweet)
+        db.session.commit()
+        return jsonify(tweet.to_dict()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 @routes.route("/api/tweet/<int:tweet_id>", methods=["PUT"])
 @jwt_required()

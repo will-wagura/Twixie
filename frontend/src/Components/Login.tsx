@@ -26,11 +26,11 @@ function App() {
     try {
       const response = await loginUser(loginData.email, loginData.password);
       const token = response.token;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', token); 
       toast.success('Login successful!');
-      navigate('/home'); // Navigate to home page after successful login
+      navigate('/home'); 
     } catch (error) {
-      toast.error('Login error: ' + error.message);
+      toast.error('Login error: ' + (error as Error).message);
     }
   };
 
@@ -44,7 +44,7 @@ function App() {
       toggle(true);
       setSignupData({ name: '', email: '', password: '' });
     } catch (error) {
-      toast.error('Signup error: ' + error.message);
+      toast.error('Signup error: ' + (error as Error).message);
     }
   };
 

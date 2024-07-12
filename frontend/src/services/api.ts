@@ -21,11 +21,27 @@ export const getTweets = async () => {
   return response.data;
 };
 
-export const createTweet = async (content: string, token: string) => {
-  const response = await api.post('/tweets', { content }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
+export const createTweet = async (tweetText: string, token: string) => {
+  try {
+    const response = await fetch('/api/tweets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ content: tweetText }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error('Server response:', result);
+      throw new Error(result.error || 'Failed to create tweet');
+    }
+
+    return result;
+  } catch (error) {
+    console.error('Error creating tweet:', error);
+    throw error;
+  }
 };
