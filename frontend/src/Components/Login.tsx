@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Components from './Components';
 import logo from '../assets/tl.png';
 import { loginUser, registerUser } from '../services/api';
 import Footer from "./Footer";
 
 function App() {
+  const navigate = useNavigate();
   const [signIn, toggle] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ name: '', email: '', password: '' });
@@ -24,6 +26,7 @@ function App() {
       const token = response.token;
       localStorage.setItem('token', token);
       console.log('Login successful:', response);
+      navigate('/home'); // Navigate to home page after successful login
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -36,6 +39,8 @@ function App() {
       const token = response.token;
       localStorage.setItem('token', token);
       console.log('Signup successful:', response);
+      toggle(true); 
+      setSignupData({ name: '', email: '', password: '' }); 
     } catch (error) {
       console.error('Signup error:', error);
     }
