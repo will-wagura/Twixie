@@ -41,6 +41,7 @@ Twixie is a full-stack application built with a Flask backend and a React fronte
 
    ```
    cp .env.example .env
+   source .env
    ```
 
 4. Set up the database:
@@ -91,11 +92,9 @@ honcho start -f Procfile.dev
    npm start
    ``` -->
 
-
 - Open your browser and go to `http://localhost:5173` to view the application.
 
 # Endpoints:
-
 
 - Optionally:
 
