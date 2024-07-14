@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaHome, FaRegEnvelope, FaSearch, FaRetweet, FaHeart, FaShareAlt, FaReply, FaTrash } from "react-icons/fa";
+import { FaHome, FaRegEnvelope, FaSearch, FaRetweet, FaHeart, FaReply, FaTrash } from "react-icons/fa";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { IoIosSearch } from "react-icons/io";
@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     const fetchTweets = async () => {
       try {
         const data = await getTweets();
-        setTweets(data.sort((a, b) => b.timestamp - a.timestamp));
+        setTweets(data.sort((a: Tweet, b: Tweet) => b.timestamp - a.timestamp));
       } catch (error) {
         console.error("Error fetching tweets:", error);
       }
